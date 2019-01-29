@@ -1,0 +1,15 @@
+{
+  "apps": [{
+    "name": "web-safety-server",
+    "script": "production.js",
+    "cwd": "/Users/xiaoyang.li/project/webSafetyNode/web-safety-server",
+    "exec_mode": "fork",
+    "max_memory_restart": "1G",
+    "autorestart": true,
+    "node_args": [],
+    "args": [],
+    "env": {
+      
+    }
+  }]
+}
