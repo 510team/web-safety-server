@@ -1,6 +1,7 @@
 const Base = require('./base.js');
 
 module.exports = class extends Base {
+    //列表
     async indexAction(carModel) {
         const data = await this.model('list').getList();
         const result = {};
@@ -8,13 +9,22 @@ module.exports = class extends Base {
         result.list = data;
         return this.json(result);
     }
-
+    // 新增
     async postedAction() {
         const title = this.ctx.post('title');
         const content = this.ctx.post('content');
-        const user_id = 2;
+
+        const userData = this.ctx.state.user;
+        const userId = userData.id;
+        think.logger.info('id', userId);
+        if (!userId) {
+            return this.json({
+                status: 'failure',
+                message: '校验失败'
+            });
+        }
         const user_info = await this.model('user')
-            .where({ id: user_id })
+            .where({ id: userId })
             .find();
         think.logger.error('nam', user_info);
         const result = {};
@@ -26,11 +36,11 @@ module.exports = class extends Base {
             result.message = '帖子内容是必须的';
         } else {
             const insertId = await this.model('list').add({
-                user_id: 2,
+                user_id: userId,
                 name: user_info.name,
                 title: title,
                 content: content,
-                create_time: parseInt(new Date().getTime())
+                create_time: new Date()
             });
             result.status = 'success';
             result.message = '发布成功';
@@ -38,8 +48,20 @@ module.exports = class extends Base {
         return this.json(result);
     }
 
+    async viewAction() {
+        const listID = this.ctx.param('id');
+
+        const result = {};
+
+        const list = await this.model('list').getListByUserId(listID);
+
+        result.status = 'success';
+        result.data = list;
+        return this.json(result);
+    }
+    //删除
     async deletedAction() {
-        const listID = this.ctx.post('list_id');
+        const listID = this.ctx.post('id');
         const result = {};
         if (think.isEmpty(listID)) {
             result.status = 'failure';

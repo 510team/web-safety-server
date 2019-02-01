@@ -1,12 +1,6 @@
 const account = require('../config/account.js'); // 账号密码
 const crypto = require('crypto');
-
-function aesEncrypt(data, key) {
-    const cipher = crypto.createCipher('aes192', key);
-    var crypted = cipher.update(data, 'utf8', 'hex');
-    crypted += cipher.final('hex');
-    return crypted;
-}
+const jwt = require('jsonwebtoken');
 
 module.exports = class extends think.Controller {
     async indexAction() {
@@ -16,14 +10,19 @@ module.exports = class extends think.Controller {
         const password = this.ctx.post('password');
         // 返回
         const result = {};
-        if (password === account[user]) {
-            const token = aesEncrypt(
-                JSON.stringify({
-                    user: user,
-                    date: new Date().getTime() / 1000
-                }),
-                jwtKey
-            );
+        const savedUser = await this.model('user').getUserByUserName(user);
+        think.logger.info('savedUser', savedUser);
+        if (password == savedUser['password']) {
+            const payload = {
+                user: user,
+                password,
+                level: savedUser['level'],
+                id: savedUser.id
+            };
+            let token = jwt.sign(payload, jwtKey, {
+                expiresIn: 60 * 60 * 24 * 30
+            });
+            think.logger.info('token', token);
             this.ctx.cookie('user', token);
             this.ctx.cookie('username', user, {
                 httpOnly: false

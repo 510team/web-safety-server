@@ -1,23 +1,23 @@
-const fileCache = require("think-cache-file");
-const nunjucks = require("think-view-nunjucks");
-const fileSession = require("think-session-file");
-const mysql = require("think-model-mysql");
-const { Console, File, DateFile } = require("think-logger3");
-const path = require("path");
-const isDev = think.env === "development";
+const fileCache = require('think-cache-file');
+const nunjucks = require('think-view-nunjucks');
+const fileSession = require('think-session-file');
+const mysql = require('think-model-mysql');
+const { Console, File, DateFile } = require('think-logger3');
+const path = require('path');
+const isDev = think.env === 'development';
 
 /**
  * cache adapter config
  * @type {Object}
  */
 exports.cache = {
-    type: "file",
+    type: 'file',
     common: {
         timeout: 24 * 60 * 60 * 1000 // millisecond
     },
     file: {
         handle: fileCache,
-        cachePath: path.join(think.ROOT_PATH, "runtime/cache"), // absoulte path is necessarily required
+        cachePath: path.join(think.ROOT_PATH, 'runtime/cache'), // absoulte path is necessarily required
         pathDepth: 1,
         gcInterval: 24 * 60 * 60 * 1000 // gc interval
     }
@@ -28,7 +28,7 @@ exports.cache = {
  * @type {Object}
  */
 exports.model = {
-    type: "mysql",
+    type: 'mysql',
     common: {
         logConnect: isDev,
         logSql: isDev,
@@ -37,15 +37,15 @@ exports.model = {
     mysql: {
         handle: mysql,
         // database: "blog",
-        database: "web_safety",
+        database: 'web_safety',
         // prefix: 'think_',
         connectionLimit: 100,
-        encoding: "utf8mb4",
-        charset: "utf8mb4",
-        host: "",
-        port: "3306",
-        user: "root",
-        password: "123456",
+        encoding: 'utf8mb4',
+        charset: 'utf8mb4',
+        host: '',
+        port: '3306',
+        user: 'root',
+        password: 'a1b2c3d4',
         dateStrings: true
     }
 };
@@ -55,17 +55,17 @@ exports.model = {
  * @type {Object}
  */
 exports.session = {
-    type: "file",
+    type: 'file',
     common: {
         cookie: {
-            name: "thinkjs"
+            name: 'thinkjs'
             // keys: ['werwer', 'werwer'],
             // signed: true
         }
     },
     file: {
         handle: fileSession,
-        sessionPath: path.join(think.ROOT_PATH, "runtime/session")
+        sessionPath: path.join(think.ROOT_PATH, 'runtime/session')
     }
 };
 
@@ -74,11 +74,11 @@ exports.session = {
  * @type {Object}
  */
 exports.view = {
-    type: "nunjucks",
+    type: 'nunjucks',
     common: {
-        viewPath: path.join(think.ROOT_PATH, "view"),
-        sep: "_",
-        extname: ".html"
+        viewPath: path.join(think.ROOT_PATH, 'view'),
+        sep: '_',
+        extname: '.html'
     },
     nunjucks: {
         handle: nunjucks
@@ -90,7 +90,7 @@ exports.view = {
  * @type {Object}
  */
 exports.logger = {
-    type: isDev ? "console" : "dateFile",
+    type: isDev ? 'console' : 'dateFile',
     console: {
         handle: Console
     },
@@ -99,14 +99,14 @@ exports.logger = {
         backups: 10, // max chunk number
         absolute: true,
         maxLogSize: 50 * 1024, // 50M
-        filename: path.join(think.ROOT_PATH, "logs/app.log")
+        filename: path.join(think.ROOT_PATH, 'logs/app.log')
     },
     dateFile: {
         handle: DateFile,
-        level: "ALL",
+        level: 'ALL',
         absolute: true,
-        pattern: "-yyyy-MM-dd",
+        pattern: '-yyyy-MM-dd',
         alwaysIncludePattern: true,
-        filename: path.join(think.ROOT_PATH, "logs/app.log")
+        filename: path.join(think.ROOT_PATH, 'logs/app.log')
     }
 };

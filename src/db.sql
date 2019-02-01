@@ -1,30 +1,28 @@
 
-CREATE TABLE user (
+CREATE TABLE `user` (
 `id` BIGINT
 (11) NOT NULL AUTO_INCREMENT COMMENT '自增ID',
 `name` varchar
 (100) NOT NULL  DEFAULT '' COMMENT '用户名',
 `password` varchar
 (20)  NOT NULL DEFAULT '' COMMENT '密码',
- PRIMARY KEY
-(id)
-)
+ PRIMARY KEY (`id`)
+);
 
 CREATE TABLE `list`
 (
 `id` bigint
 (11) NOT NULL AUTO_INCREMENT COMMENT '自增ID',
 `user_id` bigint
-(11) NOT NULL DEFAULT ''  COMMENT '登录人id',
+(11) NOT NULL DEFAULT 1  COMMENT '登录人id',
 `name` varchar
 (64) NOT NULL DEFAULT ''  COMMENT '发表人',
 `title` varchar
 (64) NOT NULL DEFAULT ''  COMMENT '文章名称',
 `content` varchar
 (10000) NOT NULL DEFAULT ''  COMMENT '文章内容',
-`create_time` timestamp COMMENT '创建时间',
-PRIMARY KEY
-(`id`)
+`create_time` bigint COMMENT '创建时间',
+PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='文章表';
 
 insert into `list`
