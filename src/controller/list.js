@@ -5,10 +5,20 @@ module.exports = class extends Base {
     async indexAction(carModel) {
         const data = await this.model('list').getList();
         const result = {};
+        const userData = this.ctx.state.user;
+        const userLevel = userData.level;
+
         result.status = 'success';
         result.list = data;
+        if (userLevel !== 100) {
+            result.delete = false;
+        } else {
+            result.delete = true;
+        }
+
         return this.json(result);
     }
+
     // 新增
     async postedAction() {
         const title = this.ctx.post('title');
@@ -47,7 +57,7 @@ module.exports = class extends Base {
         }
         return this.json(result);
     }
-
+    //查看
     async viewAction() {
         const listID = this.ctx.param('id');
 
@@ -59,8 +69,21 @@ module.exports = class extends Base {
         result.data = list;
         return this.json(result);
     }
+
     //删除
     async deletedAction() {
+        const userData = this.ctx.state.user;
+        const userId = userData.id;
+        const user_info = await this.model('user')
+            .where({ id: userId })
+            .find();
+        if (user_info.level !== 100) {
+            return this.json({
+                status: 'failure',
+                message: '权限不足，无法删除'
+            });
+        }
+
         const listID = this.ctx.post('id');
         const result = {};
         if (think.isEmpty(listID)) {
