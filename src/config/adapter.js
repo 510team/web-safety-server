@@ -45,7 +45,7 @@ exports.model = {
         host: '',
         port: '3306',
         user: 'root',
-        password: 'a1b2c3d4',
+        password: '',
         dateStrings: true
     }
 };
