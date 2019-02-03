@@ -3,9 +3,9 @@ module.exports = class extends think.Model {
         const List = await this.model('list').select();
         return List;
     }
-    async getListByUserId(id) {
+    async getListByUserId(user_id) {
         const List = await this.model('list')
-            .where({ id: id })
+            .where({ id: user_id })
             .find();
         return List;
     }

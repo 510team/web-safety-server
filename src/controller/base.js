@@ -8,17 +8,23 @@ module.exports = class extends think.Controller {
         const token = this.cookie('user');
         if (!token) {
             this.ctx.state.user = '';
-            return this.json({ status: 'failure', message: '校验失败' });
+            return this.json({
+                status: 'failure',
+                message: '用户校验失败,请重新登陆'
+            });
         }
 
         const userData = jwt.verify(token, jwtKey);
         think.logger.info('当前用户', userData);
         if (!userData) {
             this.ctx.state.user = '';
-            return this.json({ status: 'failure', message: '校验失败' });
+            return this.json({
+                status: 'failure',
+                message: '用户校验失败,请重新登陆'
+            });
         }
-        // await this.cache('user', userData);
+
         this.ctx.state.user = userData;
-        think.logger.info('校验成功');
+        think.logger.info('用户校验成功');
     }
 };
