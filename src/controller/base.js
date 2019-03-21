@@ -1,9 +1,19 @@
 const jwt = require('jsonwebtoken');
+
 module.exports = class extends think.Controller {
     async __before() {
+        // if (this.header('referer') !== this.config('host')) {
+        //     return false;
+        // }
+
+        // if(this.header('token') !== ''){
+
+        // }
+
         if (this.ctx.url === '/') {
             return true;
         }
+
         const jwtKey = this.config('jwtKey', undefined, this.ctx.module);
         const token = this.cookie('user');
         if (!token) {

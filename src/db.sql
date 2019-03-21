@@ -26,15 +26,11 @@ PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='文章表';
 
 insert into `list`
-( `
-title`,
-`user_id
-`, `name`, `content`, `create_time`) values
+( `title`,
+`user_id`, `name`, `content`, `create_time`) values
 ( '学习技能', 1, 'root', '好了。到这里我们就实现的使用账号密码登录的功能。这里没有采用md5对密码加密，如果需要只要直接md5(password)就好了。\n下章接着对 登录后如何注销  ，其他页面的控制器要如何判断是否登录   进行纪录', '1450851199000');
 
 insert into `list`
-( `
-title`,
-`user_id
-`, `name`, `content`, `create_time`) values
+( `title`,
+`user_id`, `name`, `content`, `create_time`) values
 ( '随笔谈一下', 2, '章三', '好了。到这里我们就实现的使用账号密码登录的功能。这里没有', '1500851199000');
