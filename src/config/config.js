@@ -1,6 +1,6 @@
 // default config
 module.exports = {
-    // host: '10.124.18.15',
+    hostname: '127.0.0.1:8080',
     port: 8362,
     workers: 1,
     jwtKey: 'jwtkey'
