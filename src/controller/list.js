@@ -116,7 +116,7 @@ module.exports = class extends Base {
         const userData = this.ctx.state.user;
         const userId = userData.id;
 
-        const listID = this.ctx.post('list_id');
+        const listID = this.ctx.post('id');
         const result = {};
 
         if (think.isEmpty(listID)) {

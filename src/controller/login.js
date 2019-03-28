@@ -25,7 +25,7 @@ module.exports = class extends think.Controller {
                 expiresIn: 60 * 60 * 24
             });
             think.logger.info('token', token);
-            this.ctx.cookie('user', token);
+            this.ctx.cookie('user', token);   // httpOnly: true
             this.ctx.cookie('username', user, {
                 httpOnly: false
             });

@@ -25,22 +25,13 @@ module.exports = class extends think.Controller {
             this.ctx.state.user = '';
             return this.json({
                 status: 'failure',
-                message: 'token无效,请重新登陆',
-                code: '401'
+                message: 'token无效,请重新登陆'
             });
         }
 
 
         const jwtKey = this.config('jwtKey', undefined, this.ctx.module);
         // const token = this.cookie('user');
-
-        if (!headerToken) {
-            this.ctx.state.user = '';
-            return this.json({
-                status: 'failure',
-                message: 'token无效,请重新登陆'
-            });
-        }
 
         jwt.verify(headerToken, jwtKey, (err, userData) => {
             if (err) {
